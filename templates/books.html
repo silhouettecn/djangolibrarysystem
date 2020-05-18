@@ -11,7 +11,7 @@
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
             <button class="btn btn-sm btn-outline-secondary">Sort By</button>
-            <input class="disabled btn btn-sm btn-outline-secondary" type="submit" value="书号" name="order_bno">
+            <input class="disabled btn btn-sm btn-outline-secondary" type="submit" value="资产编号" name="order_bno">
             <input class="disabled btn btn-sm btn-outline-secondary" type="submit" value="书名" name="order_title">
 
         </div>
@@ -43,7 +43,7 @@
 <div class="table-responsive">
 <table class="table table-striped table-sm">
   <thead>
-    <th>书号</th>
+    <th>资产编号</th>
     <th>类别</th>
     <th>书名</th>
     <th>出版社</th>
@@ -51,6 +51,7 @@
     <th>作者</th>
     <th>价格</th>
     <th>数量</th>
+    <th>当前读者</th>
     <th>状态</th>
   </thead>
   <tbody>
@@ -64,10 +65,15 @@
       <td> {{ row.author}} </td>
       <td> {{ row.price}} </td>
       <td> {{ row.stock}} </td>
-      {% if row.stock > 0 %}
-      <td> <button type="button" class="btn btn-primary btn-sm">可借</button></td>
+      {% if row.stock == 0 %}
+        <td> {{ row.borrow__cno}} </td>
       {% else %}
-      <td> <button type="button" class="btn btn-secondary btn-sm">缺货</button></td>
+        <td> -- </td>
+      {% endif %}
+      {% if row.stock > 0 %}
+      <td> <button type="button" class="btn btn-primary btn-sm">在馆</button></td>
+      {% else %}
+      <td> <button type="button" class="btn btn-secondary btn-sm">借出</button></td>
       {% endif %}
   </tr>
   {% endfor %}

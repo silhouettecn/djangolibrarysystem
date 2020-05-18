@@ -15,7 +15,7 @@
     </div>
   </div>
 
-    <!--书号, 类别, 书名, 出版社, 年份, 作者, 价格, 总藏书量, 库存-->
+    <!--资产编号, 类别, 书名, 出版社, 年份, 作者, 价格, 总藏书量, 库存-->
     <br/>
 <div class="row">
   <div class="col-sm-12">
@@ -24,7 +24,7 @@
         <form class="form-add" action="/book_manage/" method="post">{% csrf_token %}
           <div class="form-row" >
             <div class="form-group col-md-3">
-              <input type="text" class="form-control" id="inputBno" placeholder="书号" name="bno">
+              <input type="text" class="form-control" id="inputBno" placeholder="资产编号" name="bno">
             </div>
             <div class="form-group col-md-3">
               <input type="text" class="form-control" id="inputCategory" placeholder="类别" name="category">

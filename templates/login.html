@@ -9,8 +9,8 @@
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="lib_cover">
             <div class="word">
-                <h2>Welcome To Mini Online Library!</h2>
-                <p>You can search, borrow, return books.</p>
+                <h2>Welcome To cpc Online Library!</h2>
+                <p>可以查询，借书，自助归还</p>
             </div>
         </div>
 
@@ -27,20 +27,20 @@
             {% csrf_token %}
       <a href="/index/"><img class="mb-4" src="/static/imgs/reading.png" alt="" width="72" height="72"></a>
       <h1 class="h3 mb-3 font-weight-normal">
-          Please log in
+          登录
       </h1>
       <label for="inputId" class="sr-only">
           User ID
       </label>
-      <input type="text" id="inputId" name="user_id" class="form-control" placeholder="User ID" required autofocus>
+      <input type="text" id="inputId" name="user_id" class="form-control" placeholder="域ID" required autofocus>
       <label for="inputPassword" class="sr-only">
           Password
       </label>
-      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
       <br/>
 
         <!--<a class=" btn btn-outline-secondary" href="/index/" role="button">Visitor</a>-->
-        <button class=" btn btn-lg btn-primary btn-block" type="submit">Admin Login</button>
+        <button class=" btn btn-lg btn-primary btn-block" type="submit">Login</button>
 
         </form>
       </div>
@@ -49,10 +49,9 @@
     <br><br>
     <footer class="text-center mt-auto">
         <div class="inner">
-          <p>© Created by <a href="#">Mihu</a></p>
+          <p></p>
         </div>
       </footer>
-
 
 {% endblock %}
 

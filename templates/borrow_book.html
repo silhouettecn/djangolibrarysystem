@@ -8,7 +8,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">借书</h1>
 </div>
-<p>输入卡号，查询该借书证所有已借书籍；输入卡号和书号进行借书。</p><br>
+<p>输入卡号，查询该借书证所有已借书籍；输入卡号和资产编号进行借书。</p><br>
 <form action="/borrow_book/" method="post">{% csrf_token %}
   <div class="form-row" >
     <div class="col-md-4 mb-3">
@@ -22,7 +22,7 @@
     <div class="col-md-4 mb-3">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">书号</span>
+          <span class="input-group-text">资产编号</span>
         </div>
         <input type="text" class="form-control" id="BookNo" name="bno" placeholder="bno" aria-describedby="inputGroupPrepend">
       </div>
@@ -61,7 +61,7 @@
 <table class="table table-striped table-sm">
   <thead>
     <th>卡号</th>
-    <th>书号</th>
+    <th>资产编号</th>
     <th>借书时间</th>
     <th>还书时间</th>
     <th>管理员id</th>
@@ -86,7 +86,7 @@
 <div class="table-responsive">
 <table class="table table-striped table-sm">
   <thead>
-    <th>书号</th>
+    <th>资产编号</th>
     <th>类别</th>
     <th>书名</th>
     <th>出版社</th>

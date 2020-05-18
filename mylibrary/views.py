@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.shortcuts import redirect
-from mylibrary import models
+import mylibrary.models as models
+from mylibrary.models import Borrow
 from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.db import connection, IntegrityError, transaction
 from django.contrib.auth.hashers import make_password, check_password
-
+from django.db.models import Q
 
 # Create your views here.
 
@@ -260,7 +261,7 @@ def borrow_book(request):
                     try:
                         with transaction.atomic():
                             models.Borrow.objects.create(cno=i_card, bno=i_book, borrow_date=timezone.now(),
-                                                     return_date=None, admin_id=i_admin)
+                                                         return_date=None, admin_id=i_admin)
                             i_book.stock -= 1
                             i_book.save()
                             messages.success(request, "Borrow book OK!")
@@ -338,7 +339,47 @@ class Pagination(object):
             model_name=model_name,
             start_pos=start_pos,
             end_pos=end_pos))
-        objs = eval(find_objs_str)
+        # book = models.Book.objects.all()
+        # print(book)
+        # for i in book:
+        #     if models.Borrow.objects.filter(book__bno=i.bno):
+        #         print(models.Borrow.objects.filter(book__bno=i.bno))
+        #     else:
+        #         print("not exists")
+        # print(book[0].bno)
+        # 查询此人有多少车
+        # 方式一:
+        # Django默认每个主表对象都有一个外键的属性
+        # 可以通过它来查询所有属于主表的子表信息
+        # 查询方式：主表.子表_set()
+        # 返回值为一个queryset对象
+        # Book.Borrow_set().all()
+        # print(5*"xxxxxx")
+        # j=1
+        book = models.Book.objects.all()
+        c = []
+        # for i in book:
+        #     print("1232")
+        #     print(models.Book.objects.values('borrow__return_date'))
+        #     # print(i.borrow.first().return_date)
+        #     if i.borrow.first() and models.Book.objects[i].values('borrow__return_date') is None:
+        ret = models.Book.objects.filter(stock=0)
+        if ret.count() !=0:
+            c = models.Book.objects.filter(borrow__return_date__isnull=True, borrow__borrow_date__isnull=False).values('bno', 'category', "title", 'press', 'year', 'author', 'price', 'total',
+                                           'stock','borrow__cno')
+            d = models.Book.objects.filter(stock=1).values('bno', 'category', "title", 'press', 'year', 'author', 'price', 'total',
+                                           'stock','borrow__cno')
+            e = d | c
+
+            for i in c:
+                print(i)
+        else:
+            e = models.Book.objects.all()
+            print("ewe")
+            print(e)
+
+
+
 
         # 计算总共的页数
         find_objs_count_str = 'models.Book.objects.count()'.format(
@@ -382,9 +423,9 @@ class Pagination(object):
 
         # 创建能点击的展示页码
         page_items = range(start_page, end_page + 1)
-
+        # print(objs["aa"] = 111)
         pagination = {
-            'objs': objs,
+            'objs': e.distinct(),
             'all_obj_counts': all_obj_counts,
             'start_pos': start_pos,
             'end_pos': end_pos,
@@ -394,7 +435,7 @@ class Pagination(object):
             'next_page': next_page,
             'page_items': page_items,
             'start_page_omit_symbol': start_page_omit_symbol,
-            'end_page_omit_symbol': end_page_omit_symbol,
+            'end_page_omit_symbol': end_page_omit_symbol
         }
 
         return pagination

@@ -21,7 +21,7 @@ class Librarian(models.Model):
 
 
 class Book(models.Model):
-    bno = models.CharField(max_length=8, primary_key=True)
+    bno = models.CharField(max_length=15, primary_key=True)
     category = models.CharField(max_length=10)
     title = models.CharField(max_length=40)
     press = models.CharField(max_length=30)
@@ -36,8 +36,9 @@ class Book(models.Model):
         ordering = ["bno"]
 
 
+
 class Card(models.Model):
-    cno = models.CharField(max_length=7, primary_key=True)
+    cno = models.CharField(max_length=15, primary_key=True)
     name = models.CharField(max_length=10)
     department = models.CharField(max_length=40)
     TYPE_CHOICE = (
@@ -47,14 +48,14 @@ class Card(models.Model):
         (4, 'O')
     )
     type = models.CharField(max_length=2, choices=TYPE_CHOICE, default='U')
-
+    bounds = models.IntegerField(default=100)
     class Meta:
         db_table = "card"
 
 
 class Borrow(models.Model):
     cno = models.ForeignKey('Card', on_delete=models.CASCADE)
-    bno = models.ForeignKey('Book', on_delete=models.DO_NOTHING)
+    bno = models.ForeignKey('Book', related_name='borrow',on_delete=models.DO_NOTHING)
     borrow_date = models.DateTimeField()
     return_date = models.DateTimeField(null=True)
     admin_id = models.ForeignKey('Librarian', on_delete=models.DO_NOTHING)
